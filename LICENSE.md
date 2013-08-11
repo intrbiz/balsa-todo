@@ -1,7 +1,7 @@
 License
 =======
 Balsa Todo
-Copyright (c) 2012, Chris Ellis
+Copyright (c) 2013, Chris Ellis
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
