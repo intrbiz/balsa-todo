@@ -4,7 +4,7 @@
 <fragment xmlns="com.intrbiz.balsa" title="Welcome">
 	<h1>Balsa Todolist</h1>
 	<p>
-		Welcome to the Balsa Todolist.  This is a simmple demo app built using
+		Welcome to the Balsa Todolist.  This is a simple demo app built using
 		the <a href="balsa-framework.org">Balsa Framework</a>
 	</p>
 </fragment>
