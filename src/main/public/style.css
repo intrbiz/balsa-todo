@@ -54,6 +54,10 @@ h1 {
 	height: 26px;
 }
 
+#nav ul#new-list {
+	margin-top: 20px;
+}
+
 .complete {
 	top: 5px;
 	right: 5px;
