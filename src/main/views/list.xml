@@ -1,0 +1,35 @@
+<!DOCTYPE balsa SYSTEM "http://balsa.intrbiz.net/balsa.dtd">
+<?RenderLibrary com.intrbiz.balsa?>
+<!-- The index view -->
+<fragment xmlns="com.intrbiz.balsa" title="#{'Todolist: ' + list.title}">
+	<div id="list">
+		<h1>#{list.title}</h1>
+		<ul>
+			<data-set var="entry" value="#{list.entries}">
+				<li>
+					<div class="entry">
+						<a href="#{'entry/remove/' + entry.id + '?key=' + urlencode(access_token())}" class="icon remove"></a>
+						<a href="#{'entry/complete/' + entry.id + '?key=' + urlencode(access_token())}" class="icon complete"></a>
+						<h4>#{entry.title}</h4>
+						<p>#{coalesce(entry.description, '')}</p>
+					</div>
+				</li>
+			</data-set>
+		</ul>
+	</div>
+	<div class="entry new">
+		<h2>New Task</h2>
+		<form action="#{path('entry/new/' + list.name)}" method="post">
+			<div>
+				<input type="text" placeholder="What do you need to do" id="title" name="title"/>
+			</div>
+			<div>
+				<textarea id="description" name="description" placeholder="Overview of the task"></textarea>
+			</div>
+			<div>
+				<access-token-for-url path="#{path('entry/new/' + list.name)}"/>
+				<input type="submit" value="Add" id="add" name="add"/>
+			</div>
+		</form>
+	</div>
+</fragment>

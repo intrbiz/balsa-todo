@@ -1,0 +1,99 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Open Sans',sans-serif;
+	font-size: 16px;
+	color: #2c2c2c;
+	background-color: #FFF;
+	width:  960px;
+	margin: 50px auto;
+}
+
+h1 {
+	font-size: 42px;
+}
+
+#nav {
+	float: left;
+	width: 200px;
+}
+
+#nav ul {
+	list-style: none;
+	padding-left: 10px;
+}
+
+#content {
+	float: left;
+	margin-left: 20px;
+	width: 600px;
+}
+
+#content ul {
+	margin-top: 20px;
+	list-style: none;
+}
+
+.entry {
+	position: relative;
+	background: #EEE;
+	min-height: 40px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.icon {
+	padding: 0;
+	display: block;
+	text-decoration: none;
+	position: absolute;
+	width: 26px;
+	height: 26px;
+}
+
+.complete {
+	top: 5px;
+	right: 5px;
+	background: transparent url('complete.png') no-repeat 0px 0px;
+}
+
+.remove {
+	top: 5px;
+	right: 40px;
+	background: transparent url('remove.png') no-repeat 0px 0px;
+}
+
+.new {
+	margin-top: 50px;
+	background: #BFD9FF !important;
+}
+
+.new h2 {
+	margin-bottom: 10px;
+}
+
+.new input[type=text] {
+	width: 560px;
+	padding: 5px;
+}
+
+.new textarea {
+	margin-top: 10px;
+	width: 560px;
+	padding: 5px;
+}
+
+.new input[type=submit] {
+	width: 70px;
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 5px;
+}
+
+.new-list {
+	margin-top: 0 !important;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE balsa SYSTEM "http://balsa.intrbiz.net/balsa.dtd">
+<?RenderLibrary com.intrbiz.balsa?>
+<!-- A template view, applied to all views -->
+<html xmlns="com.intrbiz.balsa">
+	<head>
+		<title>Balsa Todolist Demo: #{title()}</title>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" type="text/css" href="#{public('style.css')}" />
+	</head>
+	<body>
+		<div id="nav">
+			<h4>Todo Lists:</h4>
+			<ul>
+				<data-set var="list" value="#{lists}">
+					<li>
+						<a href="#{'/list/' + list.name}">#{list.title}</a>
+					</li>
+				</data-set>
+			</ul>
+			<ul>
+				<li>
+					<a href="/new/list">New List</a>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<content/>
+		</div>
+	</body>
+</html>
