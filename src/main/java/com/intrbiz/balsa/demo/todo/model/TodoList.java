@@ -7,11 +7,11 @@ import com.intrbiz.balsa.demo.todo.db.TodoListDB;
 import com.intrbiz.data.db.compiler.meta.SQLColumn;
 import com.intrbiz.data.db.compiler.meta.SQLPrimaryKey;
 import com.intrbiz.data.db.compiler.meta.SQLTable;
-import com.intrbiz.data.db.compiler.meta.Version;
+import com.intrbiz.data.db.compiler.meta.SQLVersion;
 
 @SQLTable(
         name = "list",
-        since = @Version(major = 1, minor = 0)
+        since = @SQLVersion(major = 1, minor = 0)
 )
 public class TodoList
 {

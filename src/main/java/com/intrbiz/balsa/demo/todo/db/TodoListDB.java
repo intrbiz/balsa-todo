@@ -17,13 +17,13 @@ import com.intrbiz.data.db.compiler.meta.SQLQuery;
 import com.intrbiz.data.db.compiler.meta.SQLRemove;
 import com.intrbiz.data.db.compiler.meta.SQLSchema;
 import com.intrbiz.data.db.compiler.meta.SQLSetter;
-import com.intrbiz.data.db.compiler.meta.Version;
+import com.intrbiz.data.db.compiler.meta.SQLVersion;
 import com.intrbiz.data.db.compiler.util.SQLScriptSet;
 import com.intrbiz.metadata.ListOf;
 
 @SQLSchema(
         name = "todo", 
-        version = @Version(major = 1, minor = 0),
+        version = @SQLVersion(major = 1, minor = 0),
         tables = {
             TodoList.class,
             TodoListEntry.class           

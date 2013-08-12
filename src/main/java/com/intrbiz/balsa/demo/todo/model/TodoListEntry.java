@@ -8,11 +8,11 @@ import com.intrbiz.data.db.compiler.meta.SQLColumn;
 import com.intrbiz.data.db.compiler.meta.SQLForeignKey;
 import com.intrbiz.data.db.compiler.meta.SQLPrimaryKey;
 import com.intrbiz.data.db.compiler.meta.SQLTable;
-import com.intrbiz.data.db.compiler.meta.Version;
+import com.intrbiz.data.db.compiler.meta.SQLVersion;
 
 @SQLTable(
         name = "entry",
-        since = @Version(major = 1, minor = 0)
+        since = @SQLVersion(major = 1, minor = 0)
 )
 public class TodoListEntry
 {
