@@ -7,18 +7,22 @@ import com.intrbiz.balsa.demo.todo.db.TodoListDB;
 import com.intrbiz.data.db.compiler.meta.SQLColumn;
 import com.intrbiz.data.db.compiler.meta.SQLPrimaryKey;
 import com.intrbiz.data.db.compiler.meta.SQLTable;
+import com.intrbiz.data.db.compiler.meta.Version;
 
-@SQLTable(name = "list")
+@SQLTable(
+        name = "list",
+        since = @Version(major = 1, minor = 0)
+)
 public class TodoList
 {
-    @SQLColumn(index = 1)
+    @SQLColumn(index = 1, name = "name")
     @SQLPrimaryKey()
     private String name;
 
-    @SQLColumn(index = 2)
+    @SQLColumn(index = 2, name = "title")
     private String title;
 
-    @SQLColumn(index = 3)
+    @SQLColumn(index = 3, name = "created")
     private Timestamp created;
 
     public TodoList()

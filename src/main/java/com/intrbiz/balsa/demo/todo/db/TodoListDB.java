@@ -17,15 +17,18 @@ import com.intrbiz.data.db.compiler.meta.SQLQuery;
 import com.intrbiz.data.db.compiler.meta.SQLRemove;
 import com.intrbiz.data.db.compiler.meta.SQLSchema;
 import com.intrbiz.data.db.compiler.meta.SQLSetter;
-import com.intrbiz.data.db.compiler.meta.SQLTables;
 import com.intrbiz.data.db.compiler.meta.Version;
+import com.intrbiz.data.db.compiler.util.SQLScriptSet;
 import com.intrbiz.metadata.ListOf;
 
-@SQLSchema(name = "todo", version = @Version(major = 1, minor = 0))
-@SQLTables({
-    TodoList.class,
-    TodoListEntry.class
-})
+@SQLSchema(
+        name = "todo", 
+        version = @Version(major = 1, minor = 0),
+        tables = {
+            TodoList.class,
+            TodoListEntry.class           
+        }
+)
 public abstract class TodoListDB extends DatabaseAdapter
 {
     static
@@ -80,6 +83,7 @@ public abstract class TodoListDB extends DatabaseAdapter
         // output the schema
         DatabaseAdapterCompiler compiler = DatabaseAdapterCompiler.defaultPGSQLCompiler();
         compiler.getDialect().setOwner("todo");
-        compiler.compileSchema(TodoListDB.class);
+        SQLScriptSet script = compiler.compileSchema(TodoListDB.class);
+        System.out.println(script);
     }
 }

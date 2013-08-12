@@ -8,31 +8,35 @@ import com.intrbiz.data.db.compiler.meta.SQLColumn;
 import com.intrbiz.data.db.compiler.meta.SQLForeignKey;
 import com.intrbiz.data.db.compiler.meta.SQLPrimaryKey;
 import com.intrbiz.data.db.compiler.meta.SQLTable;
+import com.intrbiz.data.db.compiler.meta.Version;
 
-@SQLTable(name = "entry")
+@SQLTable(
+        name = "entry",
+        since = @Version(major = 1, minor = 0)
+)
 public class TodoListEntry
 {
-    @SQLColumn(index = 1)
+    @SQLColumn(index = 1, name = "id")
     @SQLPrimaryKey()
     private UUID id = UUID.randomUUID();
 
-    @SQLColumn(index = 2)
+    @SQLColumn(index = 2, name = "list_name")
     @SQLForeignKey(references = TodoList.class, on = "name", onDelete = Action.CASCADE)
     private String listName;
 
-    @SQLColumn(index = 3)
+    @SQLColumn(index = 3, name = "title")
     private String title;
 
-    @SQLColumn(index = 4)
+    @SQLColumn(index = 4, name = "description")
     private String description;
 
-    @SQLColumn(index = 5)
+    @SQLColumn(index = 5, name = "created")
     private Timestamp created;
 
-    @SQLColumn(index = 6)
+    @SQLColumn(index = 6, name = "complete")
     private boolean complete = false;
 
-    @SQLColumn(index = 7)
+    @SQLColumn(index = 7, name = "completed")
     private Timestamp completed;
 
     public TodoListEntry()
