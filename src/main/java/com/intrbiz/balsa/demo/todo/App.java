@@ -14,6 +14,7 @@ public class App extends BalsaApplication
     {
         // Setup the application routers
         router(new TodoUI());
+        router(new MetricsUI());
         // setup the database
         DataManager.getInstance().registerDefaultServer(DatabasePool.Default.create(Driver.class, "jdbc:postgresql://127.0.0.1/todo", "todo", ""));
         // ensure the database is installed and upgraded
