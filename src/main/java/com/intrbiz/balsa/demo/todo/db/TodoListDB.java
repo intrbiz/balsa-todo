@@ -21,11 +21,10 @@ import com.intrbiz.data.db.compiler.meta.SQLSetter;
 import com.intrbiz.data.db.compiler.meta.SQLVersion;
 import com.intrbiz.data.db.compiler.meta.ScriptType;
 import com.intrbiz.data.db.compiler.util.SQLScript;
-import com.intrbiz.metadata.ListOf;
 
 @SQLSchema(
         name = "todo", 
-        version = @SQLVersion(major = 1, minor = 1),
+        version = @SQLVersion({1, 1, 1}),
         tables = {
             TodoList.class,
             TodoListEntry.class           
@@ -55,39 +54,37 @@ public abstract class TodoListDB extends DatabaseAdapter
     
     // TodoList
     
-    @SQLSetter
+    @SQLSetter(name = "set_todo_list", table = TodoList.class, since = @SQLVersion({1, 0, 0}))
     public abstract void setTodoList(TodoList list) throws DataException;
     
-    @SQLRemove
-    public abstract void removeTodoList(TodoList list) throws DataException;
+    @SQLRemove(name = "remove_todo_list", table = TodoList.class, since = @SQLVersion({1, 0, 0}))
+    public abstract void removeTodoList(@SQLParam("name") String name) throws DataException;
     
-    @SQLGetter(orderBy = @SQLOrder("created"))
-    @ListOf(TodoList.class)
+    @SQLGetter(name = "get_todo_lists", table = TodoList.class, since = @SQLVersion({1, 0, 0}), orderBy = @SQLOrder("created"))
     public abstract List<TodoList> getTodoLists() throws DataException;
     
-    @SQLGetter
+    @SQLGetter(name = "get_todo_list", table = TodoList.class, since = @SQLVersion({1, 0, 0}))
     public abstract TodoList getTodoList(@SQLParam("name") String name) throws DataException;
     
     // TodoListEntry
     
-    @SQLSetter
+    @SQLSetter(name = "set_todo_list_entry", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}))
     public abstract void setTodoListEntry(TodoListEntry entry) throws DataException;
     
-    @SQLRemove
-    public abstract void removeTodoListEntry(TodoListEntry entry) throws DataException;
+    @SQLRemove(name = "remove_todo_list_entry", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}))
+    public abstract void removeTodoListEntry(@SQLParam("id") UUID id) throws DataException;
     
-    @SQLGetter
+    @SQLGetter(name = "get_todo_list_entry", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}))
     public abstract TodoListEntry getTodoListEntry(@SQLParam("id") UUID id) throws DataException;
     
-    @SQLGetter(orderBy = @SQLOrder("created"), query = @SQLQuery("SELECT * FROM todo.entry WHERE list_name = p_list_name AND complete = true"))
-    @ListOf(TodoListEntry.class)
+    @SQLGetter(name = "get_todo_list_entries", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}), orderBy = @SQLOrder("created"), query = @SQLQuery("SELECT * FROM todo.entry WHERE list_name = p_list_name AND complete = false"))
     public abstract List<TodoListEntry> getTodoListEntries(@SQLParam("list_name") String list) throws DataException;
     
     // patches
     
     // default values
     
-    @SQLPatch(name = "Default task list", index = 1, type = ScriptType.INSTALL, version = @SQLVersion(major = 1, minor = 1))
+    @SQLPatch(name = "Default task list", index = 1, type = ScriptType.INSTALL, version = @SQLVersion({1, 1, 0}))
     public static SQLScript defaultTaskList()
     {
         return new SQLScript(

@@ -11,18 +11,18 @@ import com.intrbiz.data.db.compiler.meta.SQLVersion;
 
 @SQLTable(
         name = "list",
-        since = @SQLVersion(major = 1, minor = 0)
+        since = @SQLVersion({1, 0, 0})
 )
 public class TodoList
 {
-    @SQLColumn(index = 1, name = "name")
+    @SQLColumn(index = 1, name = "name", since = @SQLVersion({1, 0, 0}))
     @SQLPrimaryKey()
     private String name;
 
-    @SQLColumn(index = 2, name = "title")
+    @SQLColumn(index = 2, name = "title", since = @SQLVersion({1, 0, 0}))
     private String title;
 
-    @SQLColumn(index = 3, name = "created")
+    @SQLColumn(index = 3, name = "created", since = @SQLVersion({1, 0, 0}))
     private Timestamp created;
 
     public TodoList()

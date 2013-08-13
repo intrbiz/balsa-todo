@@ -68,7 +68,7 @@ public class TodoUI extends Router
         TodoListEntry entry = db.getTodoListEntry(UUID.fromString(id));
         if (entry == null) throw new BalsaNotFound();
         // remove
-        db.removeTodoListEntry(entry);
+        db.removeTodoListEntry(entry.getId());
         // redirect to the list
         redirect("list/" + entry.getListName());
     }

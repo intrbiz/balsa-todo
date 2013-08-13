@@ -13,33 +13,33 @@ import com.intrbiz.data.db.compiler.meta.SQLVersion;
 import com.intrbiz.data.db.compiler.meta.ScriptType;
 import com.intrbiz.data.db.compiler.util.SQLScript;
 
-@SQLTable(name = "entry", since = @SQLVersion(major = 1, minor = 0))
+@SQLTable(name = "entry", since = @SQLVersion({1, 0, 0}))
 public class TodoListEntry
 {
-    @SQLColumn(index = 1, name = "id")
+    @SQLColumn(index = 1, name = "id", since = @SQLVersion({1, 0, 0}))
     @SQLPrimaryKey()
     private UUID id = UUID.randomUUID();
 
-    @SQLColumn(index = 2, name = "list_name")
+    @SQLColumn(index = 2, name = "list_name", since = @SQLVersion({1, 0, 0}))
     @SQLForeignKey(references = TodoList.class, on = "name", onDelete = Action.CASCADE)
     private String listName;
 
-    @SQLColumn(index = 3, name = "title")
+    @SQLColumn(index = 3, name = "title", since = @SQLVersion({1, 0, 0}))
     private String title;
 
-    @SQLColumn(index = 4, name = "description")
+    @SQLColumn(index = 4, name = "description", since = @SQLVersion({1, 0, 0}))
     private String description;
 
-    @SQLColumn(index = 5, name = "created")
+    @SQLColumn(index = 5, name = "created", since = @SQLVersion({1, 0, 0}))
     private Timestamp created;
 
-    @SQLColumn(index = 6, name = "complete")
+    @SQLColumn(index = 6, name = "complete", since = @SQLVersion({1, 0, 0}))
     private boolean complete = false;
 
-    @SQLColumn(index = 7, name = "completed")
+    @SQLColumn(index = 7, name = "completed", since = @SQLVersion({1, 0, 0}))
     private Timestamp completed;
 
-    @SQLColumn(index = 8, name = "due")
+    @SQLColumn(index = 8, name = "due", since = @SQLVersion({1, 1, 0}))
     private Timestamp due;
 
     public TodoListEntry()
@@ -141,7 +141,7 @@ public class TodoListEntry
     
     // upgrade
     
-    @SQLPatch(name = "Add due column", type = ScriptType.UPGRADE, index = 1, version = @SQLVersion(major = 1, minor = 1))
+    @SQLPatch(name = "Add due column", type = ScriptType.UPGRADE, index = 1, version = @SQLVersion({1, 1, 0}))
     public static SQLScript addDueColumn()
     {
         return new SQLScript(
