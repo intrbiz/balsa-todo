@@ -20,9 +20,7 @@ import com.intrbiz.data.db.compiler.meta.SQLSchema;
 import com.intrbiz.data.db.compiler.meta.SQLSetter;
 import com.intrbiz.data.db.compiler.meta.SQLVersion;
 import com.intrbiz.data.db.compiler.meta.ScriptType;
-import com.intrbiz.data.db.compiler.model.Version;
 import com.intrbiz.data.db.compiler.util.SQLScript;
-import com.intrbiz.data.db.compiler.util.SQLScriptSet;
 import com.intrbiz.metadata.ListOf;
 
 @SQLSchema(
@@ -52,9 +50,7 @@ public abstract class TodoListDB extends DatabaseAdapter
     
     public static void install()
     {
-        DatabaseAdapterCompiler compiler = DatabaseAdapterCompiler.defaultPGSQLCompiler();
-        compiler.getDialect().setOwner("todo");
-        compiler.install(DataManager.getInstance().connect(), TodoListDB.class);
+        DatabaseAdapterCompiler.defaultPGSQLCompiler("todo").install(DataManager.getInstance().connect(), TodoListDB.class);
     }
     
     // TodoList
@@ -98,16 +94,5 @@ public abstract class TodoListDB extends DatabaseAdapter
                 "INSERT INTO todo.list (name, title, created) VALUES ('tasks', 'Tasks', now())",
                 "INSERT INTO todo.entry (id, list_name, title, created, complete, completed) VALUES ('" + UUID.randomUUID().toString() + "'::UUID,  'Try Balsa', NULL, now(), FALSE, NULL)"
         );
-    }
-    
-    //
-    
-    public static void main(String[] args) throws Exception
-    {
-        // output the schema
-        DatabaseAdapterCompiler compiler = DatabaseAdapterCompiler.defaultPGSQLCompiler();
-        compiler.getDialect().setOwner("todo");
-        SQLScriptSet script = compiler.compileUpgradeSchema(TodoListDB.class, new Version(1,0,0));
-        System.out.println(script);
     }
 }
