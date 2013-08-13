@@ -35,7 +35,7 @@ public abstract class TodoListDB extends DatabaseAdapter
 {
     static
     {
-        DataManager.getInstance().registerDatabaseAdapter2(TodoListDB.class, DatabaseAdapterCompiler.defaultPGSQLCompiler().compileAdapterFactory(TodoListDB.class));
+        DataManager.getInstance().registerDatabaseAdapter(TodoListDB.class, DatabaseAdapterCompiler.defaultPGSQLCompiler().compileAdapterFactory(TodoListDB.class));
     }
     
     public static final TodoListDB connect()
