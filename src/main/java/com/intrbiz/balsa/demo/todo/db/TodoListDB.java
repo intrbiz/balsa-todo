@@ -13,17 +13,21 @@ import com.intrbiz.data.db.compiler.DatabaseAdapterCompiler;
 import com.intrbiz.data.db.compiler.meta.SQLGetter;
 import com.intrbiz.data.db.compiler.meta.SQLOrder;
 import com.intrbiz.data.db.compiler.meta.SQLParam;
+import com.intrbiz.data.db.compiler.meta.SQLPatch;
 import com.intrbiz.data.db.compiler.meta.SQLQuery;
 import com.intrbiz.data.db.compiler.meta.SQLRemove;
 import com.intrbiz.data.db.compiler.meta.SQLSchema;
 import com.intrbiz.data.db.compiler.meta.SQLSetter;
 import com.intrbiz.data.db.compiler.meta.SQLVersion;
+import com.intrbiz.data.db.compiler.meta.ScriptType;
+import com.intrbiz.data.db.compiler.model.Version;
+import com.intrbiz.data.db.compiler.util.SQLScript;
 import com.intrbiz.data.db.compiler.util.SQLScriptSet;
 import com.intrbiz.metadata.ListOf;
 
 @SQLSchema(
         name = "todo", 
-        version = @SQLVersion(major = 1, minor = 0),
+        version = @SQLVersion(major = 1, minor = 1),
         tables = {
             TodoList.class,
             TodoListEntry.class           
@@ -44,6 +48,13 @@ public abstract class TodoListDB extends DatabaseAdapter
     public TodoListDB(DatabaseConnection connection)
     {
         super(connection);
+    }
+    
+    public static void install()
+    {
+        DatabaseAdapterCompiler compiler = DatabaseAdapterCompiler.defaultPGSQLCompiler();
+        compiler.getDialect().setOwner("todo");
+        compiler.install(DataManager.getInstance().connect(), TodoListDB.class);
     }
     
     // TodoList
@@ -76,6 +87,19 @@ public abstract class TodoListDB extends DatabaseAdapter
     @ListOf(TodoListEntry.class)
     public abstract List<TodoListEntry> getTodoListEntries(@SQLParam("list_name") String list) throws DataException;
     
+    // patches
+    
+    // default values
+    
+    @SQLPatch(name = "Default task list", index = 1, type = ScriptType.INSTALL, version = @SQLVersion(major = 1, minor = 1))
+    public static SQLScript defaultTaskList()
+    {
+        return new SQLScript(
+                "INSERT INTO todo.list (name, title, created) VALUES ('tasks', 'Tasks', now())",
+                "INSERT INTO todo.entry (id, list_name, title, created, complete, completed) VALUES ('" + UUID.randomUUID().toString() + "'::UUID,  'Try Balsa', NULL, now(), FALSE, NULL)"
+        );
+    }
+    
     //
     
     public static void main(String[] args) throws Exception
@@ -83,7 +107,7 @@ public abstract class TodoListDB extends DatabaseAdapter
         // output the schema
         DatabaseAdapterCompiler compiler = DatabaseAdapterCompiler.defaultPGSQLCompiler();
         compiler.getDialect().setOwner("todo");
-        SQLScriptSet script = compiler.compileSchema(TodoListDB.class);
+        SQLScriptSet script = compiler.compileUpgradeSchema(TodoListDB.class, new Version(1,0,0));
         System.out.println(script);
     }
 }

@@ -6,14 +6,14 @@ import java.util.UUID;
 import com.intrbiz.data.db.compiler.meta.Action;
 import com.intrbiz.data.db.compiler.meta.SQLColumn;
 import com.intrbiz.data.db.compiler.meta.SQLForeignKey;
+import com.intrbiz.data.db.compiler.meta.SQLPatch;
 import com.intrbiz.data.db.compiler.meta.SQLPrimaryKey;
 import com.intrbiz.data.db.compiler.meta.SQLTable;
 import com.intrbiz.data.db.compiler.meta.SQLVersion;
+import com.intrbiz.data.db.compiler.meta.ScriptType;
+import com.intrbiz.data.db.compiler.util.SQLScript;
 
-@SQLTable(
-        name = "entry",
-        since = @SQLVersion(major = 1, minor = 0)
-)
+@SQLTable(name = "entry", since = @SQLVersion(major = 1, minor = 0))
 public class TodoListEntry
 {
     @SQLColumn(index = 1, name = "id")
@@ -38,6 +38,9 @@ public class TodoListEntry
 
     @SQLColumn(index = 7, name = "completed")
     private Timestamp completed;
+
+    @SQLColumn(index = 8, name = "due")
+    private Timestamp due;
 
     public TodoListEntry()
     {
@@ -105,7 +108,7 @@ public class TodoListEntry
     {
         return complete;
     }
-    
+
     public boolean getComplete()
     {
         return complete;
@@ -124,5 +127,27 @@ public class TodoListEntry
     public void setCompleted(Timestamp completed)
     {
         this.completed = completed;
+    }
+
+    public Timestamp getDue()
+    {
+        return due;
+    }
+
+    public void setDue(Timestamp due)
+    {
+        this.due = due;
+    }
+    
+    // upgrade
+    
+    @SQLPatch(name = "Add due column", type = ScriptType.UPGRADE, index = 1, version = @SQLVersion(major = 1, minor = 1))
+    public static SQLScript addDueColumn()
+    {
+        return new SQLScript(
+               "ALTER TABLE todo.entry ADD COLUMN due TIMESTAMP WITH TIME ZONE",
+               "ALTER TYPE todo.t_entry ADD ATTRIBUTE due TIMESTAMP WITH TIME ZONE",
+               "DROP FUNCTION todo.set_todo_list_entry(uuid, text, text, text, timestamp with time zone, boolean, timestamp with time zone)"
+        );
     }
 }
