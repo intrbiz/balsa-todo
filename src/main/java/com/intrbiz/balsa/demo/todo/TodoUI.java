@@ -10,6 +10,7 @@ import com.intrbiz.balsa.engine.route.Router;
 import com.intrbiz.balsa.error.http.BalsaNotFound;
 import com.intrbiz.balsa.metadata.WithDataAdapter;
 import com.intrbiz.metadata.Any;
+import com.intrbiz.metadata.AsUUID;
 import com.intrbiz.metadata.Get;
 import com.intrbiz.metadata.Param;
 import com.intrbiz.metadata.Post;
@@ -62,9 +63,9 @@ public class TodoUI extends Router<App>
     @Get("/entry/remove/:id")
     @RequireValidAccessToken()
     @WithDataAdapter(TodoListDB.class)
-    public void removeEntry(TodoListDB db, String id) throws IOException
+    public void removeEntry(TodoListDB db, @AsUUID UUID id) throws IOException
     {
-        TodoListEntry entry = db.getTodoListEntry(UUID.fromString(id));
+        TodoListEntry entry = db.getTodoListEntry(id);
         if (entry == null) throw new BalsaNotFound();
         // remove
         db.removeTodoListEntry(entry.getId());
@@ -75,9 +76,9 @@ public class TodoUI extends Router<App>
     @Get("/entry/complete/:id")
     @RequireValidAccessToken()
     @WithDataAdapter(TodoListDB.class)
-    public void completeEntry(TodoListDB db, String id) throws IOException
+    public void completeEntry(TodoListDB db, @AsUUID UUID id) throws IOException
     {
-        TodoListEntry entry = db.getTodoListEntry(UUID.fromString(id));
+        TodoListEntry entry = db.getTodoListEntry(id);
         if (entry == null) throw new BalsaNotFound();
         // update
         entry.setComplete(true);
