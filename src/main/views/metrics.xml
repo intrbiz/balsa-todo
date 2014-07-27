@@ -28,10 +28,10 @@
 				<th>Value</th>
 			</tr>
 			<data-set var="metric" value="#{metrics}">
-				<tr rendered="#{metric.isGaugue()}">
+				<tr rendered="#{metric.isGauge()}">
 					<td>#{metric.source}</td>
 					<td>#{metric.name}</td>
-					<td>#{metric.value}</td>
+					<td>#{metric.metric.value}</td>
 				</tr>
 			</data-set>
 		</table>
@@ -46,7 +46,7 @@
 				<tr rendered="#{metric.isCounter()}">
 					<td>#{metric.source}</td>
 					<td>#{metric.name}</td>
-					<td>#{metric.count}</td>
+					<td>#{metric.metric.count}</td>
 				</tr>
 			</data-set>
 		</table>
@@ -56,20 +56,20 @@
 				<th>Source</th>
 				<th>Name</th>
 				<th>Count</th>
-				<th>Mean Rate</th>
-				<th>One Minute Rate</th>
-				<th>Five Minute Rate</th>
-				<th>Fifteen Minute Rate</th>
+				<th>Mean Rate (Hz)</th>
+				<th>One Minute Rate (Hz)</th>
+				<th>Five Minute Rate (Hz)</th>
+				<th>Fifteen Minute Rate (Hz)</th>
 			</tr>
 			<data-set var="metric" value="#{metrics}">
 				<tr rendered="#{metric.isMeter()}">
 					<td>#{metric.source}</td>
 					<td>#{metric.name}</td>
-					<td>#{metric.count}</td>
-					<td>#{metric.meanRate}</td>
-					<td>#{metric.oneMinuteRate}</td>
-					<td>#{metric.fiveMinuteRate}</td>
-					<td>#{metric.fifteenMinuteRate}</td>
+					<td>#{metric.metric.count}</td>
+					<td>#{metric.metric.meanRate}</td>
+					<td>#{metric.metric.oneMinuteRate}</td>
+					<td>#{metric.metric.fiveMinuteRate}</td>
+					<td>#{metric.metric.fifteenMinuteRate}</td>
 				</tr>
 			</data-set>
 		</table>
@@ -79,30 +79,30 @@
 				<th>Source</th>
 				<th>Name</th>
 				<th>Count</th>
-				<th>Min</th>
-				<th>Max</th>
-				<th>Median</th>
-				<th>Mean</th>
-				<th>75th</th>
-				<th>95th</th>
-				<th>98th</th>
-				<th>99th</th>
-				<th>Std Dev</th>
+				<th>Min (ms)</th>
+				<th>Max (ms)</th>
+				<th>Median (ms)</th>
+				<th>Mean (ms)</th>
+				<th>75th (ms)</th>
+				<th>95th (ms)</th>
+				<th>98th (ms)</th>
+				<th>99th (ms)</th>
+				<th>Std Dev (ms)</th>
 			</tr>
 			<data-set var="metric" value="#{metrics}">
-				<tr rendered="#{metric.isMeter()}">
+				<tr rendered="#{metric.isHistogram()}">
 					<td>#{metric.source}</td>
 					<td>#{metric.name}</td>
-					<td>#{metric.count}</td>
-					<td>#{metric.snapshot.min}</td>
-					<td>#{metric.snapshot.max}</td>
-					<td>#{metric.snapshot.median}</td>
-					<td>#{metric.snapshot.mean}</td>
-					<td>#{metric.snapshot.get75thPercentile()}</td>
-					<td>#{metric.snapshot.get95thPercentile()}</td>
-					<td>#{metric.snapshot.get98thPercentile()}</td>
-					<td>#{metric.snapshot.get99thPercentile()}</td>
-					<td>#{metric.snapshot.stdDev}</td>
+					<td>#{metric.metric.count}</td>
+					<td>#{double(metric.metric.snapshot.min) / 1000000D}</td>
+					<td>#{double(metric.metric.snapshot.max) / 1000000D}</td>
+					<td>#{metric.metric.snapshot.median / 1000000D}</td>
+					<td>#{metric.metric.snapshot.mean / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get75thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get95thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get98thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get99thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.stdDev / 1000000D}</td>
 				</tr>
 			</data-set>
 		</table>
@@ -112,38 +112,38 @@
 				<th>Source</th>
 				<th>Name</th>
 				<th>Count</th>
-				<th>Mean Rate</th>
-				<th>One Minute Rate</th>
-				<th>Five Minute Rate</th>
-				<th>Fifteen Minute Rate</th>
-				<th>Min</th>
-				<th>Max</th>
-				<th>Median</th>
-				<th>Mean</th>
-				<th>75th</th>
-				<th>95th</th>
-				<th>98th</th>
-				<th>99th</th>
-				<th>Std Dev</th>
+				<th>Mean Rate (Hz)</th>
+				<th>One Minute Rate (Hz)</th>
+				<th>Five Minute Rate (Hz)</th>
+				<th>Fifteen Minute Rate (Hz)</th>
+				<th>Min (ms)</th>
+				<th>Max (ms)</th>
+				<th>Median (ms)</th>
+				<th>Mean (ms)</th>
+				<th>75th (ms)</th>
+				<th>95th (ms)</th>
+				<th>98th (ms)</th>
+				<th>99th (ms)</th>
+				<th>Std Dev (ms)</th>
 			</tr>
 			<data-set var="metric" value="#{metrics}">
 				<tr rendered="#{metric.isTimer()}">
 					<td>#{metric.source}</td>
 					<td>#{metric.name}</td>
-					<td>#{metric.count}</td>
-					<td>#{metric.meanRate}</td>
-					<td>#{metric.oneMinuteRate}</td>
-					<td>#{metric.fiveMinuteRate}</td>
-					<td>#{metric.fifteenMinuteRate}</td>
-					<td>#{metric.snapshot.min}</td>
-					<td>#{metric.snapshot.max}</td>
-					<td>#{metric.snapshot.median}</td>
-					<td>#{metric.snapshot.mean}</td>
-					<td>#{metric.snapshot.get75thPercentile()}</td>
-					<td>#{metric.snapshot.get95thPercentile()}</td>
-					<td>#{metric.snapshot.get98thPercentile()}</td>
-					<td>#{metric.snapshot.get99thPercentile()}</td>
-					<td>#{metric.snapshot.stdDev}</td>
+					<td>#{metric.metric.count}</td>
+					<td>#{metric.metric.meanRate}</td>
+					<td>#{metric.metric.oneMinuteRate}</td>
+					<td>#{metric.metric.fiveMinuteRate}</td>
+					<td>#{metric.metric.fifteenMinuteRate}</td>
+					<td>#{double(metric.metric.snapshot.min) / 1000000D}</td>
+					<td>#{double(metric.metric.snapshot.max) / 1000000D}</td>
+					<td>#{metric.metric.snapshot.median / 1000000D}</td>
+					<td>#{metric.metric.snapshot.mean / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get75thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get95thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get98thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.get99thPercentile() / 1000000D}</td>
+					<td>#{metric.metric.snapshot.stdDev / 1000000D}</td>
 				</tr>
 			</data-set>
 		</table>
