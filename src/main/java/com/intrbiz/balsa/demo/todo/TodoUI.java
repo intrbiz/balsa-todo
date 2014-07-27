@@ -21,7 +21,7 @@ import com.intrbiz.metadata.Template;
 // Routes for the URL root
 @Prefix("/")
 @Template("layout/main")
-public class TodoUI extends Router
+public class TodoUI extends Router<App>
 {
     @Any("/")
     @WithDataAdapter(TodoListDB.class)
@@ -37,7 +37,6 @@ public class TodoUI extends Router
     @WithDataAdapter(TodoListDB.class)
     public void main(TodoListDB db, String name)
     {
-        
         TodoList list = model("list", db.getTodoList(name));
         if (list == null) throw new BalsaNotFound();
         // get the list of todo lists
