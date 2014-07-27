@@ -7,6 +7,7 @@ import com.intrbiz.balsa.demo.todo.model.TodoList;
 import com.intrbiz.balsa.demo.todo.model.TodoListEntry;
 import com.intrbiz.data.DataException;
 import com.intrbiz.data.DataManager;
+import com.intrbiz.data.cache.Cache;
 import com.intrbiz.data.db.DatabaseAdapter;
 import com.intrbiz.data.db.DatabaseConnection;
 import com.intrbiz.data.db.compiler.DatabaseAdapterCompiler;
@@ -39,9 +40,9 @@ public abstract class TodoListDB extends DatabaseAdapter
         return DataManager.getInstance().databaseAdapter(TodoListDB.class);
     }
     
-    public TodoListDB(DatabaseConnection connection)
+    public TodoListDB(DatabaseConnection connection, Cache cache)
     {
-        super(connection);
+        super(connection, cache);
     }
     
     public static void install()
