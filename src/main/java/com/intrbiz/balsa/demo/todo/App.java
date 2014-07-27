@@ -20,4 +20,10 @@ public class App extends BalsaApplication
         // ensure the database is installed and upgraded
         TodoListDB.install();
     }
+    
+    public static void main(String[] args) throws Exception
+    {
+        App app = new App();
+        app.start();
+    }
 }
