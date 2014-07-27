@@ -8,6 +8,8 @@ import com.intrbiz.balsa.demo.todo.model.TodoListEntry;
 import com.intrbiz.data.DataException;
 import com.intrbiz.data.DataManager;
 import com.intrbiz.data.cache.Cache;
+import com.intrbiz.data.cache.CacheInvalidate;
+import com.intrbiz.data.cache.Cacheable;
 import com.intrbiz.data.db.DatabaseAdapter;
 import com.intrbiz.data.db.DatabaseConnection;
 import com.intrbiz.data.db.compiler.DatabaseAdapterCompiler;
@@ -55,29 +57,41 @@ public abstract class TodoListDB extends DatabaseAdapter
     
     // TodoList
     
+    @Cacheable
+    @CacheInvalidate({"get_todo_lists", "get_todo_list.#{name}"})
     @SQLSetter(name = "set_todo_list", table = TodoList.class, since = @SQLVersion({1, 0, 0}))
     public abstract void setTodoList(TodoList list) throws DataException;
     
+    @Cacheable
+    @CacheInvalidate({"get_todo_lists", "get_todo_list.#{name}"})
     @SQLRemove(name = "remove_todo_list", table = TodoList.class, since = @SQLVersion({1, 0, 0}))
     public abstract void removeTodoList(@SQLParam("name") String name) throws DataException;
     
+    @Cacheable
     @SQLGetter(name = "get_todo_lists", table = TodoList.class, since = @SQLVersion({1, 0, 0}), orderBy = @SQLOrder("created"))
     public abstract List<TodoList> getTodoLists() throws DataException;
     
+    @Cacheable
     @SQLGetter(name = "get_todo_list", table = TodoList.class, since = @SQLVersion({1, 0, 0}))
     public abstract TodoList getTodoList(@SQLParam("name") String name) throws DataException;
     
     // TodoListEntry
     
+    @Cacheable
+    @CacheInvalidate({"get_todo_list_entries.#{list_name}"})
     @SQLSetter(name = "set_todo_list_entry", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}))
     public abstract void setTodoListEntry(TodoListEntry entry) throws DataException;
     
+    @Cacheable
+    @CacheInvalidate({"get_todo_list_entries.*"})
     @SQLRemove(name = "remove_todo_list_entry", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}))
     public abstract void removeTodoListEntry(@SQLParam("id") UUID id) throws DataException;
     
+    @Cacheable
     @SQLGetter(name = "get_todo_list_entry", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}))
     public abstract TodoListEntry getTodoListEntry(@SQLParam("id") UUID id) throws DataException;
     
+    @Cacheable
     @SQLGetter(name = "get_todo_list_entries", table = TodoListEntry.class, since = @SQLVersion({1, 0, 0}), orderBy = @SQLOrder("created"), query = @SQLQuery("SELECT * FROM todo.entry WHERE list_name = p_list_name AND complete = false"))
     public abstract List<TodoListEntry> getTodoListEntries(@SQLParam("list_name") String list) throws DataException;
     
