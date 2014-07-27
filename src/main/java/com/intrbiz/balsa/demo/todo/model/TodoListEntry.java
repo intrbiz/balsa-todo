@@ -3,6 +3,7 @@ package com.intrbiz.balsa.demo.todo.model;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import com.intrbiz.balsa.demo.todo.db.TodoListDB;
 import com.intrbiz.data.db.compiler.meta.Action;
 import com.intrbiz.data.db.compiler.meta.SQLColumn;
 import com.intrbiz.data.db.compiler.meta.SQLForeignKey;
@@ -13,7 +14,7 @@ import com.intrbiz.data.db.compiler.meta.SQLVersion;
 import com.intrbiz.data.db.compiler.meta.ScriptType;
 import com.intrbiz.data.db.compiler.util.SQLScript;
 
-@SQLTable(name = "entry", since = @SQLVersion({1, 0, 0}))
+@SQLTable(schema = TodoListDB.class, name = "entry", since = @SQLVersion({1, 0, 0}))
 public class TodoListEntry
 {
     @SQLColumn(index = 1, name = "id", since = @SQLVersion({1, 0, 0}))

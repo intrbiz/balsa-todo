@@ -9,10 +9,7 @@ import com.intrbiz.data.db.compiler.meta.SQLPrimaryKey;
 import com.intrbiz.data.db.compiler.meta.SQLTable;
 import com.intrbiz.data.db.compiler.meta.SQLVersion;
 
-@SQLTable(
-        name = "list",
-        since = @SQLVersion({1, 0, 0})
-)
+@SQLTable(schema = TodoListDB.class, name = "list", since = @SQLVersion({1, 0, 0}))
 public class TodoList
 {
     @SQLColumn(index = 1, name = "name", since = @SQLVersion({1, 0, 0}))
