@@ -14,11 +14,14 @@ import com.intrbiz.data.db.compiler.DatabaseAdapterCompiler;
 import com.intrbiz.data.db.compiler.meta.SQLGetter;
 import com.intrbiz.data.db.compiler.meta.SQLOrder;
 import com.intrbiz.data.db.compiler.meta.SQLParam;
+import com.intrbiz.data.db.compiler.meta.SQLPatch;
 import com.intrbiz.data.db.compiler.meta.SQLQuery;
 import com.intrbiz.data.db.compiler.meta.SQLRemove;
 import com.intrbiz.data.db.compiler.meta.SQLSchema;
 import com.intrbiz.data.db.compiler.meta.SQLSetter;
 import com.intrbiz.data.db.compiler.meta.SQLVersion;
+import com.intrbiz.data.db.compiler.meta.ScriptType;
+import com.intrbiz.data.db.compiler.util.SQLScript;
 
 @SQLSchema(
         name = "todo", 
@@ -81,13 +84,12 @@ public abstract class TodoListDB extends DatabaseAdapter
     // patches
     
     // default values
-    
-    /*@SQLPatch(name = "Default task list", index = 1, type = ScriptType.INSTALL, version = @SQLVersion({1, 1, 0}))
+    @SQLPatch(name = "Default task list", index = 1, type = ScriptType.INSTALL, version = @SQLVersion({1, 1, 0}))
     public static SQLScript defaultTaskList()
     {
         return new SQLScript(
-                "INSERT INTO todo.list (name, title, created) VALUES ('tasks', 'Tasks', now())",
-                "INSERT INTO todo.entry (id, list_name, title, created, complete, completed) VALUES ('" + UUID.randomUUID().toString() + "'::UUID,  'Try Balsa', NULL, now(), FALSE, NULL)"
+                "SELECT todo.set_todo_list('tasks', 'Tasks', now())",
+                "SELECT todo.set_todo_list_entry('" + UUID.randomUUID() + "'::UUID, 'tasks', 'Try Balsa', NULL, now(), FALSE, NULL, NULL)"
         );
-    }*/
+    }
 }
