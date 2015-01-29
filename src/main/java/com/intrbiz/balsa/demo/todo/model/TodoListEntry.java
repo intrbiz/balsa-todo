@@ -22,7 +22,7 @@ public class TodoListEntry
     private UUID id = UUID.randomUUID();
 
     @SQLColumn(index = 2, name = "list_name", since = @SQLVersion({1, 0, 0}))
-    @SQLForeignKey(references = TodoList.class, on = "name", onDelete = Action.CASCADE)
+    @SQLForeignKey(references = TodoList.class, on = "name", onDelete = Action.CASCADE, since = @SQLVersion({1, 0, 0}))
     private String listName;
 
     @SQLColumn(index = 3, name = "title", since = @SQLVersion({1, 0, 0}))
